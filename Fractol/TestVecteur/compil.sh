@@ -1,1 +1,0 @@
-cc -lmlx -framework OpenGL -framework Appkit fractol.c libft.a
