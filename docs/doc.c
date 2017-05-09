@@ -12,3 +12,6 @@ int 	chdir(const char *path);
 
 int 	fstat(int fd, struct stat *buf); 
 //Pareil que stat, mais prend fd en argument a la place de path.
+
+execve("ls", av, NULL)
+Chemin du programme / Arguments passes a la commande, 
