@@ -6,7 +6,7 @@
 /*   By: dchirol <dchirol@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/05/05 14:16:58 by dchirol           #+#    #+#             */
-/*   Updated: 2017/05/10 18:32:31 by dchirol          ###   ########.fr       */
+/*   Updated: 2017/05/10 21:01:39 by dchirol          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,7 +39,7 @@ char		*ft_strjoinspe(char const *s1, char const *s2)
 	return (new);
 }
 
-char	*path_test(char **path, char **entry, char *pathline) // TEST
+char	*path_test(char **path, char **entry, char *pathline)
 {
 	int i;
 	int j;
@@ -75,7 +75,6 @@ char 	**all_path(char *path_line)
 
 char	*get_envline(char **env, char *line) 
 {
-	/* RECUPERE UNE LIGNE DE L'ENV*/
 	char *ptr;
 	int i;
 
@@ -88,20 +87,25 @@ char	*get_envline(char **env, char *line)
 			break;
 		i++;
 	}
-	return (ptr + 5);
+	if (ptr)
+		return (ft_strchr(ptr, '=') + 1);
+	else
+		return (NULL);
 }
 
 char	**entry_to_tab(char **line) 
 {
-	/* RECUPERE L'ENTREE ET LA MET DANS UN DOUBLE TABLEAU */
 	char **str;
 
 	str = ft_strsplit(*line, ' ');
 	return (str);
 }
 
-void	aff_prompt()
+void	aff_prompt(char **env)
 {
+	ft_putstr(GRN);
+	ft_putstr(get_envline(env, "PWD"));
+	ft_putchar('/');
 	ft_putstr(YEL);
 	ft_putstr("Zgroumax");
 	ft_putstr(RED);
@@ -118,24 +122,28 @@ int	main(int ac, char **av, char **env)
 	char *prog_name;
 	char **function_arr;
 	int 	builtin;
+	pid_t   papa;
 
 	*line = malloc(9999);
 	function_arr = ft_strsplit(BUILTINS, '.');
-	while (1)
+	while (ft_strcmp(*line, "exit"))
 	{
-		aff_prompt();
+		aff_prompt(env);
 		get_next_line(0, line);
-		entry = entry_to_tab(line);
-		paths = all_path(get_envline(env, "PATH"));
-		if (fork() == 0)
+		if ((ft_strcmp(*line, "exit")))
 		{
-			builtin = is_in_array(*entry, function_arr);
-			if (builtin != -1)
-				builtins_launch(builtin, env, entry, av);
-			else if (execve(*entry, entry, NULL) == -1)
+			entry = entry_to_tab(line);
+			paths = all_path(get_envline(env, "PATH"));
+			if (!(papa = fork()))
 			{
-				prog_name = path_test(paths, entry, get_envline(env, "PATH"));
-				execve(prog_name, entry, NULL);
+				builtin = is_in_array(*entry, function_arr);
+				if (builtin >= 0 && builtin <= 4)
+					env = builtins_launch(builtin, env, entry, av);
+				else if (execve(*entry, entry, NULL) == -1)
+				{
+					prog_name = path_test(paths, entry, get_envline(env, "PATH"));
+					execve(prog_name, entry, NULL);
+				}
 			}
 		}
 		wait(NULL);
