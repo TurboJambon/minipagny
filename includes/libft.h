@@ -6,7 +6,7 @@
 /*   By: dchirol <dchirol@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/11/10 16:35:33 by niragne           #+#    #+#             */
-/*   Updated: 2017/04/24 15:34:23 by dchirol          ###   ########.fr       */
+/*   Updated: 2017/05/10 18:06:17 by dchirol          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,6 +18,14 @@
 # include <unistd.h>
 # include <fcntl.h>
 # define BUFF_SIZE 32
+# define RED   "\x1B[31m"
+# define GRN   "\x1B[32m"
+# define YEL   "\x1B[33m"
+# define BLU   "\x1B[34m"
+# define MAG   "\x1B[35m"
+# define CYN   "\x1B[1;96m"
+# define WHT   "\x1B[37m"
+# define RESET "\x1B[0m"
 
 typedef struct	s_list
 {

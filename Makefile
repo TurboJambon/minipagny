@@ -6,13 +6,13 @@
 #    By: dchirol <dchirol@student.42.fr>            +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2017/05/05 14:20:07 by dchirol           #+#    #+#              #
-#    Updated: 2017/05/05 14:20:16 by dchirol          ###   ########.fr        #
+#    Updated: 2017/05/10 18:11:02 by dchirol          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
 NAME = minishell
 
-SRC = src/main.c
+SRC = src/main.c src/env.c 
 
 CC = gcc
 CFLAGS = -Wall -Wextra -Werror -I includes
