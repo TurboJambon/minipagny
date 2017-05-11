@@ -6,13 +6,14 @@
 /*   By: dchirol <dchirol@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/05/10 17:45:31 by dchirol           #+#    #+#             */
-/*   Updated: 2017/05/10 20:51:20 by dchirol          ###   ########.fr       */
+/*   Updated: 2017/05/11 14:08:06 by dchirol          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef MINISHELL_H
 # include <stdio.h>
 # include <signal.h>
+# include <errno.h>
 # define MINISHELL_H
 # define BUILTINS "echo.cd.setenv.unsetenv.env.exit"
 # define BUILTINS_NBR 6

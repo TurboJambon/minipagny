@@ -1,3 +1,4 @@
 - commande echo a faire comme il faut mdr c chiant
 - setenv, unsetenv
 - commande cd
+- messages d'erreurs a faire manuellement (errno interdit)
