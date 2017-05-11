@@ -6,7 +6,7 @@
 /*   By: dchirol <dchirol@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/05/11 15:12:11 by dchirol           #+#    #+#             */
-/*   Updated: 2017/05/11 17:16:19 by dchirol          ###   ########.fr       */
+/*   Updated: 2017/05/11 17:53:39 by dchirol          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,33 +38,27 @@ void	put_cd_errors(char *name, int i)
 		ft_putendl(name);
 		return ;
 	}
-
-}
-
-void		check_lnloop(char *path)
-{
-	if (!chdir(path))
+	else if (i == 2)
+	{
 		ft_putendl("Too many levels of symbolic links");
-	return ;
+		return ;
+	}
 }
 
 void	change_dir(char *path, char *name)
 {
 	struct stat stats;
 
+	lstat(path, &stats);
 	if (dir_exist(name) == -1)													// CHECK SI DOSSIER EXISTE
 		return (put_cd_errors(name, 0));
-	if (!name || ft_strcmp(name, ".") == 0)										// CHECK SI PAS D'ARGUMENTS
+	else if (!name || ft_strcmp(name, ".") == 0)										// CHECK SI PAS D'ARGUMENTS
 		return ;
-	lstat(path, &stats);
-	if (!(stats.st_mode & S_IFDIR) && !(stats.st_mode & S_IFLNK))				// CHECK SI L'ARGUMENT EST UN DOSSIER
+	else if (!(stats.st_mode & S_IFDIR || stats.st_mode & S_IFLNK))				// CHECK SI L'ARGUMENT EST UN DOSSIER
 		return (put_cd_errors(name, 1));
-	if (stats.st_mode & S_IFLNK)
-	{																			// CHECK BOUCLE DE LIENS SYMBOLIQUES
-		check_lnloop(path);
-		return ;
-	}
-	if (chdir(path) == -1)														// EXECUTE CHDIR
-		ft_putstr("MEGABUG\n");
+	else if ((stats.st_mode & S_IFLNK) && chdir(path) == -1)							// CHECK SI LE SYMLINK LOOP
+		return (put_cd_errors(name, 2));
+	else if (chdir(path) == -1)														// EXECUTE CHDIR
+		ft_putstr("Bug Inconnu ptn\n");
 	perror(NULL);
 }
