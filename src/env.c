@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   env.c                                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: dchirol <dchirol@student.42.fr>            +#+  +:+       +#+        */
+/*   By: niragne <niragne@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/05/10 17:24:12 by dchirol           #+#    #+#             */
-/*   Updated: 2017/05/11 16:43:04 by dchirol          ###   ########.fr       */
+/*   Updated: 2017/05/11 16:58:43 by niragne          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,35 +48,32 @@ char		**set_env(char **env, char **entry)
 	}
 	while (env[size])
 			size++;
-	new_env = malloc(size + 1);
+	if (!(new_env = malloc(sizeof(char*) * (size + 1))))
+		return (NULL);
 	if (!j)
 	{
 		while (i < size - 1)
 		{
 			new_env[i] = ft_strdup(env[i]);
-			printf("CUL %d %s\n", i, new_env[0]);
 			i++;
 		}
-		printf("%s\n", "sorti");
 		new_env[i] = ft_strdup(entry[1]);
 		i++;
 		new_env[i] = ft_strdup(env[i - 1]);
-	printf("%s %s %s %s\n", new_env[0],new_env[1],new_env[2], new_env[3]);
-
 	}
 	else 
 	{
 		while (i < j)
 		{
-			printf("%d\n", i);
 			new_env[i] = ft_strdup(env[i]);
 			i++;
 		}
 		new_env[i] = ft_strdup(entry[1]);
+		printf("%s, %s, %s\n", new_env[i], env[i], entry[1]);
 		i++;
 		while (i < size)
 		{
-			new_env[i] = ft_strdup(env[i - 1]);
+			new_env[i] = ft_strdup(env[i]);
 			i++;
 		}
 	}
