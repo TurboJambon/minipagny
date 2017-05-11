@@ -6,7 +6,7 @@
 /*   By: dchirol <dchirol@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/05/10 17:24:12 by dchirol           #+#    #+#             */
-/*   Updated: 2017/05/11 14:08:05 by dchirol          ###   ########.fr       */
+/*   Updated: 2017/05/11 16:43:04 by dchirol          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -115,25 +115,17 @@ int		is_in_array(char *str, char **array)
 	return (-1);
 }
 
-void	change_dir(char *path)
-{
-	if (chdir(path) == -1)
-		ft_putstr("cd march pa ;(\n");
-}
-
 char	**builtins_launch(int i, char **env, char **entry, char **av)
 {
 	(void)av;
-	if (i == 0)
+	if (i == 0) 		/* ECHO	*/
 		execve(ft_strjoinspe(getpath(av[0]), ft_strjoinspe("bin", *entry)), entry, NULL);
-	if (i == 1)
-		change_dir(ft_strjoinspe(getpath(av[0]), entry[1]));
-	else if (i == 2)
-	{
+	else if (i == 1) 	/*  CD 	*/
+			change_dir(ft_strjoinspe(getcwd(av[0], MAXPATHLEN), entry[1]), entry[1]);
+	else if (i == 2)	/*SETENV*/
 		env = set_env(env, entry);
-	}
-	else if (i == 4)
-		aff_env(env);
+	else if (i == 4)	/* ENV	*/
+		aff_env(env);	
 	return (env);
 }
 
