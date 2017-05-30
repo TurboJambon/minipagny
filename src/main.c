@@ -6,7 +6,7 @@
 /*   By: dchirol <dchirol@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/05/05 14:16:58 by dchirol           #+#    #+#             */
-/*   Updated: 2017/05/11 16:33:12 by dchirol          ###   ########.fr       */
+/*   Updated: 2017/05/30 16:42:41 by dchirol          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,15 +53,13 @@ char	*path_test(char **path, char **entry, char *pathline)
 		i++;
 	}
 	i = 0;
-	{	
-		while (i < j)
-		{
-			*path = ft_strjoinspe(*path, *entry);
-			if (access(*path, F_OK) == 0)
-				return(*path);
-				path++;
-			i++;
-		}
+	while (i < j)
+	{
+		*path = ft_strjoinspe(*path, *entry);
+		if (access(*path, F_OK) == 0)
+			return(*path);
+			path++;
+		i++;
 	}
 	ft_putstr("zgx: command not found: ");
 	ft_putendl(*entry);
@@ -126,11 +124,11 @@ int	main(int ac, char **av, char **env)
 
 	*line = malloc(9999);
 	function_arr = ft_strsplit(BUILTINS, '.');
-	while (ft_strcmp(*line, "exit"))
+	while (ft_strcmp(*line, "exit") != 0)
 	{
 		aff_prompt(env);
 		get_next_line(0, line);
-		if ((ft_strcmp(*line, "exit")))
+		if ((ft_strcmp(*line, "exit")) != 0)
 		{
 			entry = entry_to_tab(line);
 			paths = all_path(get_envline(env, "PATH"));
